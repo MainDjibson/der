@@ -1,15 +1,17 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../../contexts/AuthContext';
+import { useTheme } from '../../contexts/ThemeContext';
 import { 
   Shield, Mail, Lock, Eye, EyeOff, User, Phone, 
   MapPin, ArrowRight, AlertCircle, CheckCircle2,
-  Building2
+  Building2, Sun, Moon
 } from 'lucide-react';
 
 const RegisterPage = () => {
   const navigate = useNavigate();
   const { register } = useAuth();
+  const { isDark, toggleTheme } = useTheme();
   const [step, setStep] = useState(1);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
@@ -80,7 +82,17 @@ const RegisterPage = () => {
 
   if (success) {
     return (
-      <div className="futuristic-bg grid-pattern min-h-screen flex items-center justify-center p-6">
+      <div className="futuristic-bg grid-pattern min-h-screen flex items-center justify-center p-6 relative">
+        {/* Theme Toggle */}
+        <button
+          onClick={toggleTheme}
+          className="theme-toggle fixed top-6 right-6 z-50"
+          data-testid="theme-toggle-register-success-btn"
+          aria-label={isDark ? 'Activer le thème clair' : 'Activer le thème sombre'}
+        >
+          {isDark ? <Sun className="w-5 h-5" /> : <Moon className="w-5 h-5" />}
+        </button>
+
         <div className="w-full max-w-md text-center">
           <div className="card-glass p-8 glow-green">
             <div className="w-20 h-20 rounded-full bg-[var(--success)]/20 flex items-center justify-center mx-auto mb-6">
@@ -102,7 +114,17 @@ const RegisterPage = () => {
   }
 
   return (
-    <div className="futuristic-bg grid-pattern min-h-screen flex items-center justify-center p-6">
+    <div className="futuristic-bg grid-pattern min-h-screen flex items-center justify-center p-6 relative">
+      {/* Theme Toggle */}
+      <button
+        onClick={toggleTheme}
+        className="theme-toggle fixed top-6 right-6 z-50"
+        data-testid="theme-toggle-register-btn"
+        aria-label={isDark ? 'Activer le thème clair' : 'Activer le thème sombre'}
+      >
+        {isDark ? <Sun className="w-5 h-5" /> : <Moon className="w-5 h-5" />}
+      </button>
+
       <div className="w-full max-w-lg">
         <div className="text-center mb-8">
           <Link to="/" className="inline-flex items-center gap-3 mb-8">
