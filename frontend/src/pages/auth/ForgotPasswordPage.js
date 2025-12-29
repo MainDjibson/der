@@ -1,10 +1,12 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useAuth } from '../../contexts/AuthContext';
-import { Shield, Mail, ArrowRight, AlertCircle, CheckCircle2, ArrowLeft } from 'lucide-react';
+import { useTheme } from '../../contexts/ThemeContext';
+import { Shield, Mail, ArrowRight, AlertCircle, CheckCircle2, ArrowLeft, Sun, Moon } from 'lucide-react';
 
 const ForgotPasswordPage = () => {
   const { forgotPassword } = useAuth();
+  const { isDark, toggleTheme } = useTheme();
   const [email, setEmail] = useState('');
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
@@ -27,7 +29,17 @@ const ForgotPasswordPage = () => {
 
   if (success) {
     return (
-      <div className="futuristic-bg grid-pattern min-h-screen flex items-center justify-center p-6">
+      <div className="futuristic-bg grid-pattern min-h-screen flex items-center justify-center p-6 relative">
+        {/* Theme Toggle */}
+        <button
+          onClick={toggleTheme}
+          className="theme-toggle fixed top-6 right-6 z-50"
+          data-testid="theme-toggle-forgot-success-btn"
+          aria-label={isDark ? 'Activer le thème clair' : 'Activer le thème sombre'}
+        >
+          {isDark ? <Sun className="w-5 h-5" /> : <Moon className="w-5 h-5" />}
+        </button>
+
         <div className="w-full max-w-md text-center">
           <div className="card-glass p-8 glow-green">
             <div className="w-20 h-20 rounded-full bg-[var(--success)]/20 flex items-center justify-center mx-auto mb-6">
@@ -48,7 +60,17 @@ const ForgotPasswordPage = () => {
   }
 
   return (
-    <div className="futuristic-bg grid-pattern min-h-screen flex items-center justify-center p-6">
+    <div className="futuristic-bg grid-pattern min-h-screen flex items-center justify-center p-6 relative">
+      {/* Theme Toggle */}
+      <button
+        onClick={toggleTheme}
+        className="theme-toggle fixed top-6 right-6 z-50"
+        data-testid="theme-toggle-forgot-btn"
+        aria-label={isDark ? 'Activer le thème clair' : 'Activer le thème sombre'}
+      >
+        {isDark ? <Sun className="w-5 h-5" /> : <Moon className="w-5 h-5" />}
+      </button>
+
       <div className="w-full max-w-md">
         <div className="text-center mb-8">
           <Link to="/" className="inline-flex items-center gap-3 mb-8">

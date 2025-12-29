@@ -1,11 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useSearchParams } from 'react-router-dom';
 import { useAuth } from '../../contexts/AuthContext';
-import { Shield, CheckCircle2, XCircle, Loader2 } from 'lucide-react';
+import { useTheme } from '../../contexts/ThemeContext';
+import { Shield, CheckCircle2, XCircle, Loader2, Sun, Moon } from 'lucide-react';
 
 const VerifyEmailPage = () => {
   const [searchParams] = useSearchParams();
   const { verifyEmail } = useAuth();
+  const { isDark, toggleTheme } = useTheme();
   const token = searchParams.get('token');
   
   const [loading, setLoading] = useState(true);
@@ -33,7 +35,17 @@ const VerifyEmailPage = () => {
   };
 
   return (
-    <div className="futuristic-bg grid-pattern min-h-screen flex items-center justify-center p-6">
+    <div className="futuristic-bg grid-pattern min-h-screen flex items-center justify-center p-6 relative">
+      {/* Theme Toggle */}
+      <button
+        onClick={toggleTheme}
+        className="theme-toggle fixed top-6 right-6 z-50"
+        data-testid="theme-toggle-verify-btn"
+        aria-label={isDark ? 'Activer le thème clair' : 'Activer le thème sombre'}
+      >
+        {isDark ? <Sun className="w-5 h-5" /> : <Moon className="w-5 h-5" />}
+      </button>
+
       <div className="w-full max-w-md text-center">
         <Link to="/" className="inline-flex items-center gap-3 mb-8">
           <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-[var(--primary)] to-[var(--secondary)] flex items-center justify-center">

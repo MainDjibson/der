@@ -1,12 +1,14 @@
 import React, { useState } from 'react';
 import { Link, useSearchParams, useNavigate } from 'react-router-dom';
 import { useAuth } from '../../contexts/AuthContext';
-import { Shield, Lock, Eye, EyeOff, ArrowRight, AlertCircle, CheckCircle2 } from 'lucide-react';
+import { useTheme } from '../../contexts/ThemeContext';
+import { Shield, Lock, Eye, EyeOff, ArrowRight, AlertCircle, CheckCircle2, Sun, Moon } from 'lucide-react';
 
 const ResetPasswordPage = () => {
   const [searchParams] = useSearchParams();
   const navigate = useNavigate();
   const { resetPassword } = useAuth();
+  const { isDark, toggleTheme } = useTheme();
   const token = searchParams.get('token');
   
   const [password, setPassword] = useState('');
@@ -45,7 +47,17 @@ const ResetPasswordPage = () => {
 
   if (!token) {
     return (
-      <div className="futuristic-bg grid-pattern min-h-screen flex items-center justify-center p-6">
+      <div className="futuristic-bg grid-pattern min-h-screen flex items-center justify-center p-6 relative">
+        {/* Theme Toggle */}
+        <button
+          onClick={toggleTheme}
+          className="theme-toggle fixed top-6 right-6 z-50"
+          data-testid="theme-toggle-reset-invalid-btn"
+          aria-label={isDark ? 'Activer le thème clair' : 'Activer le thème sombre'}
+        >
+          {isDark ? <Sun className="w-5 h-5" /> : <Moon className="w-5 h-5" />}
+        </button>
+
         <div className="w-full max-w-md text-center">
           <div className="card-glass p-8">
             <AlertCircle className="w-16 h-16 text-[var(--error)] mx-auto mb-4" />
@@ -64,7 +76,17 @@ const ResetPasswordPage = () => {
 
   if (success) {
     return (
-      <div className="futuristic-bg grid-pattern min-h-screen flex items-center justify-center p-6">
+      <div className="futuristic-bg grid-pattern min-h-screen flex items-center justify-center p-6 relative">
+        {/* Theme Toggle */}
+        <button
+          onClick={toggleTheme}
+          className="theme-toggle fixed top-6 right-6 z-50"
+          data-testid="theme-toggle-reset-success-btn"
+          aria-label={isDark ? 'Activer le thème clair' : 'Activer le thème sombre'}
+        >
+          {isDark ? <Sun className="w-5 h-5" /> : <Moon className="w-5 h-5" />}
+        </button>
+
         <div className="w-full max-w-md text-center">
           <div className="card-glass p-8 glow-green">
             <div className="w-20 h-20 rounded-full bg-[var(--success)]/20 flex items-center justify-center mx-auto mb-6">
@@ -81,7 +103,17 @@ const ResetPasswordPage = () => {
   }
 
   return (
-    <div className="futuristic-bg grid-pattern min-h-screen flex items-center justify-center p-6">
+    <div className="futuristic-bg grid-pattern min-h-screen flex items-center justify-center p-6 relative">
+      {/* Theme Toggle */}
+      <button
+        onClick={toggleTheme}
+        className="theme-toggle fixed top-6 right-6 z-50"
+        data-testid="theme-toggle-reset-btn"
+        aria-label={isDark ? 'Activer le thème clair' : 'Activer le thème sombre'}
+      >
+        {isDark ? <Sun className="w-5 h-5" /> : <Moon className="w-5 h-5" />}
+      </button>
+
       <div className="w-full max-w-md">
         <div className="text-center mb-8">
           <Link to="/" className="inline-flex items-center gap-3 mb-8">
