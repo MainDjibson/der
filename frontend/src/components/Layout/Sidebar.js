@@ -2,6 +2,7 @@ import React from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { useAuth } from '../../contexts/AuthContext';
 import { useNotifications } from '../../contexts/NotificationContext';
+import { useTheme } from '../../contexts/ThemeContext';
 import {
   LayoutDashboard,
   FolderKanban,
@@ -13,13 +14,16 @@ import {
   Settings,
   LogOut,
   FileCheck,
-  Shield
+  Shield,
+  Sun,
+  Moon
 } from 'lucide-react';
 
 const Sidebar = ({ isOpen, onClose }) => {
   const location = useLocation();
-  const { user, logout, isAdmin, isOfficial, isCitizen } = useAuth();
+  const { user, logout, isAdmin, isOfficial } = useAuth();
   const { unreadCount } = useNotifications();
+  const { isDark, toggleTheme } = useTheme();
 
   const isActive = (path) => location.pathname === path;
 
@@ -121,7 +125,7 @@ const Sidebar = ({ isOpen, onClose }) => {
             <div className="relative">
               <Bell className="w-5 h-5" />
               {unreadCount > 0 && (
-                <span className="absolute -top-1 -right-1 w-4 h-4 bg-[var(--error)] rounded-full text-[10px] flex items-center justify-center">
+                <span className="absolute -top-1 -right-1 w-4 h-4 bg-[var(--error)] rounded-full text-[10px] flex items-center justify-center text-white">
                   {unreadCount > 9 ? '9+' : unreadCount}
                 </span>
               )}
@@ -146,6 +150,28 @@ const Sidebar = ({ isOpen, onClose }) => {
               <span>Paramètres</span>
             </Link>
           )}
+
+          {/* Theme Toggle in Sidebar */}
+          <div className="px-4 mt-6 mb-2">
+            <p className="text-xs font-semibold text-[var(--text-muted)] uppercase tracking-wider">Apparence</p>
+          </div>
+          <button
+            onClick={toggleTheme}
+            className="sidebar-nav-item w-full text-left"
+            data-testid="theme-toggle-sidebar-btn"
+          >
+            {isDark ? (
+              <>
+                <Sun className="w-5 h-5" />
+                <span>Thème clair</span>
+              </>
+            ) : (
+              <>
+                <Moon className="w-5 h-5" />
+                <span>Thème sombre</span>
+              </>
+            )}
+          </button>
         </nav>
 
         {/* Logout */}
@@ -153,6 +179,7 @@ const Sidebar = ({ isOpen, onClose }) => {
           <button
             onClick={logout}
             className="sidebar-nav-item w-full text-[var(--error)] hover:bg-red-500/10"
+            data-testid="logout-btn"
           >
             <LogOut className="w-5 h-5" />
             <span>Déconnexion</span>
