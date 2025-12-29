@@ -1,19 +1,23 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { useTheme } from '../contexts/ThemeContext';
 import { 
   Shield, 
   Rocket, 
-  Users, 
   BarChart3, 
   FileCheck,
   ArrowRight,
   CheckCircle2,
   Zap,
   Globe,
-  Award
+  Award,
+  Sun,
+  Moon
 } from 'lucide-react';
 
 const LandingPage = () => {
+  const { isDark, toggleTheme } = useTheme();
+
   const features = [
     {
       icon: FileCheck,
@@ -63,6 +67,19 @@ const LandingPage = () => {
             <span className="font-bold text-xl logo-text">PROJETS SN</span>
           </div>
           <div className="flex items-center gap-4">
+            {/* Theme Toggle */}
+            <button
+              onClick={toggleTheme}
+              className="theme-toggle"
+              data-testid="theme-toggle-btn"
+              aria-label={isDark ? 'Activer le thème clair' : 'Activer le thème sombre'}
+            >
+              {isDark ? (
+                <Sun className="w-5 h-5" />
+              ) : (
+                <Moon className="w-5 h-5" />
+              )}
+            </button>
             <Link to="/login" className="btn-ghost" data-testid="login-nav-btn">
               Connexion
             </Link>
