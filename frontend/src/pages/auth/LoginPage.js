@@ -1,11 +1,13 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../../contexts/AuthContext';
-import { Shield, Mail, Lock, Eye, EyeOff, ArrowRight, AlertCircle } from 'lucide-react';
+import { useTheme } from '../../contexts/ThemeContext';
+import { Shield, Mail, Lock, Eye, EyeOff, ArrowRight, AlertCircle, Sun, Moon } from 'lucide-react';
 
 const LoginPage = () => {
   const navigate = useNavigate();
   const { login } = useAuth();
+  const { isDark, toggleTheme } = useTheme();
   const [formData, setFormData] = useState({ email: '', password: '' });
   const [showPassword, setShowPassword] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -27,7 +29,17 @@ const LoginPage = () => {
   };
 
   return (
-    <div className="futuristic-bg grid-pattern min-h-screen flex items-center justify-center p-6">
+    <div className="futuristic-bg grid-pattern min-h-screen flex items-center justify-center p-6 relative">
+      {/* Theme Toggle */}
+      <button
+        onClick={toggleTheme}
+        className="theme-toggle fixed top-6 right-6 z-50"
+        data-testid="theme-toggle-login-btn"
+        aria-label={isDark ? 'Activer le thème clair' : 'Activer le thème sombre'}
+      >
+        {isDark ? <Sun className="w-5 h-5" /> : <Moon className="w-5 h-5" />}
+      </button>
+
       <div className="w-full max-w-md">
         <div className="text-center mb-8">
           <Link to="/" className="inline-flex items-center gap-3 mb-8">
