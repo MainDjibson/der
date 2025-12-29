@@ -3,6 +3,7 @@ import "@/App.css";
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import { AuthProvider, useAuth } from "./contexts/AuthContext";
 import { NotificationProvider } from "./contexts/NotificationContext";
+import { ThemeProvider } from "./contexts/ThemeContext";
 
 // Pages
 import LandingPage from "./pages/LandingPage";
@@ -99,13 +100,15 @@ const AppRoutes = () => {
 function App() {
   return (
     <div className="App">
-      <BrowserRouter>
-        <AuthProvider>
-          <NotificationProvider>
-            <AppRoutes />
-          </NotificationProvider>
-        </AuthProvider>
-      </BrowserRouter>
+      <ThemeProvider>
+        <BrowserRouter>
+          <AuthProvider>
+            <NotificationProvider>
+              <AppRoutes />
+            </NotificationProvider>
+          </AuthProvider>
+        </BrowserRouter>
+      </ThemeProvider>
     </div>
   );
 }
